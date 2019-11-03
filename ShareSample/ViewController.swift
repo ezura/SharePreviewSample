@@ -57,10 +57,10 @@ extension ViewController: UITableViewDelegate {
                                                   applicationActivities: nil)                          
         activityVC.popoverPresentationController?.sourceView = self.view                            
         activityVC.completionWithItemsHandler = { [ tableView] _, _, _, _ in 
-            guard let selecetedCell = tableView.indexPathForSelectedRow else {
+            guard let selectedCell = tableView.indexPathForSelectedRow else {
                 return
             }
-                tableView.deselectRow(at: selecetedCell,
+                tableView.deselectRow(at: selectedCell,
                                       animated: true)
         }
         self.present(activityVC, animated: true, completion: nil)
