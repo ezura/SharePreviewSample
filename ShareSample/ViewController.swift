@@ -30,6 +30,8 @@ class ViewController: UIViewController {
         [.image(), .text()],
         [.itemSource(item: URL(string: "https://www.google.com")!,
                      linkMetadata: LPLinkMetadata().setTitle(title: "custom title"))],
+        [.itemSource(item: #imageLiteral(resourceName: "ezura.png").pngData(), linkMetadata: nil)],
+        [.itemSource(item: URL(string: "https://github.com/ezura/spell-checker-for-swift/blob/master/Images/screenshot.png")!, linkMetadata: nil)],
         [.itemSource(item: URL(string: "https://www.google.com")!,
                      linkMetadata: nil)],
         [.text(), .itemSource(item: URL(string: "https://www.google.com")!,
@@ -113,11 +115,13 @@ enum ShareItem {
     var contents: Any {
         switch self {
         case .text(let v as Any),
-             .url(let v as Any),
-             .image(let v as Any):
+             .url(let v as Any):
             return v
+        case .image(let image):
+            return image.pngData()!
         case .itemSource(let item, let linkMetadata):
-            return ShareActivityItemSource(item: item, linkMetadata: linkMetadata)
+            return ShareActivityItemSource(item: item,
+                                           linkMetadata: linkMetadata)
         }
     }
     
@@ -153,7 +157,7 @@ class ShareActivityItemSource: NSObject, UIActivityItemSource {
         self.item = item
         self.linkMetadata = linkMetadata
     }
-
+    
     func activityViewControllerLinkMetadata(_ activityViewController: UIActivityViewController) -> LPLinkMetadata? {
         linkMetadata
     }
